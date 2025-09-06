@@ -1,5 +1,10 @@
 [
-
+  {
+    "name": "Cheese Pizza",
+    "desc": "Classic Italian cheese pizza.",
+    "price": "₹250",
+    "image": "images/pizza.jpg"
+  },
   {
     "name": "Veggie Burger",
     "desc": "Loaded with fresh veggies.",
