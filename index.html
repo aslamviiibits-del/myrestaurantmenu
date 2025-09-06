@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -105,7 +105,6 @@
       font-size: 16px;
     }
 
-    /* Checkbox styling - top-right corner, larger */
     .item input[type="checkbox"] {
       position: absolute;
       top: 10px;
@@ -118,7 +117,6 @@
       border-radius: 4px;
     }
 
-    /* Highlight selected card */
     .item.selected {
       border: 2px solid #e67e22;
       box-shadow: 0 6px 15px rgba(230, 126, 34, 0.5);
@@ -171,10 +169,13 @@
   <button id="backToTop">↑</button>
 
   <script>
+    let menuData = [];
+
     // Load menu from JSON
     fetch('data/menu.json')
       .then(response => response.json())
       .then(data => {
+        menuData = data;
         let menuDiv = document.getElementById('menu');
         data.forEach(item => {
           let card = document.createElement('div');
@@ -203,7 +204,7 @@
       }
     });
 
-    // WhatsApp order functionality
+    // WhatsApp order with price calculation
     document.getElementById('sendOrder').addEventListener('click', () => {
       const selected = document.querySelectorAll('.item input[type="checkbox"]:checked');
       if (selected.length === 0) {
@@ -211,8 +212,19 @@
         return;
       }
 
-      let items = Array.from(selected).map(cb => `- ${cb.value}`);
-      let message = `Hello, I would like to order:\n${items.join('\n')}`;
+      let messageLines = [];
+      let total = 0;
+
+      selected.forEach(cb => {
+        let itemName = cb.value;
+        let item = menuData.find(i => i.name === itemName);
+        let priceNumber = parseFloat(item.price.replace(/[^0-9.]/g, "")) || 0;
+        total += priceNumber;
+        messageLines.push(`- ${itemName} : ${item.price}`);
+      });
+
+      messageLines.push(`Total: ₹${total.toFixed(2)}`);
+      let message = `Hello, I would like to order:\n${messageLines.join('\n')}`;
       let restaurantNumber = "918970100123"; // replace with actual number
       let whatsappUrl = `https://wa.me/${restaurantNumber}?text=${encodeURIComponent(message)}`;
 
@@ -230,4 +242,3 @@
   </script>
 </body>
 </html>
-
