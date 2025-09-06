@@ -34,7 +34,6 @@
       padding: 10px;
     }
 
-    /* Default: Desktop (3 per row) */
     .menu {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -42,25 +41,23 @@
       margin-top: 30px;
     }
 
-    /* Tablet (2 per row) */
     @media screen and (max-width: 1024px) {
       .menu {
         grid-template-columns: repeat(2, 1fr);
       }
     }
 
-    /* Mobile (1 per row - force with !important) */
     @media screen and (max-width: 768px) {
       .menu {
         grid-template-columns: 1fr !important;
       }
       .item {
-        width: 95%;               /* almost full width */
-        margin: 0 auto;           /* center the card */
-        padding: 12px;            /* slightly less padding */
+        width: 95%;
+        margin: 0 auto;
+        padding: 12px;
       }
       .item h3 {
-        font-size: 20px;          /* bigger titles for readability */
+        font-size: 20px;
       }
       .item p {
         font-size: 15px;
@@ -76,6 +73,7 @@
       padding: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       transition: transform 0.2s ease;
+      position: relative;
     }
     .item:hover {
       transform: scale(1.05);
@@ -107,7 +105,29 @@
       font-size: 16px;
     }
 
-    /* Back to Top Button */
+    .item input[type="checkbox"] {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      transform: scale(1.3);
+      cursor: pointer;
+    }
+
+    #sendOrder {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 18px;
+      background-color: #e67e22;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    #sendOrder:hover {
+      background-color: #d35400;
+    }
+
     #backToTop {
       position: fixed;
       bottom: 20px;
@@ -120,7 +140,7 @@
       font-size: 20px;
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      display: none; /* hidden by default */
+      display: none;
       transition: opacity 0.3s ease;
       z-index: 1000;
     }
@@ -133,9 +153,9 @@
   <div class="container">
     <h1>🍴 Our Food Menu</h1>
     <div class="menu" id="menu"></div>
+    <button id="sendOrder">Send Order via WhatsApp</button>
   </div>
 
-  <!-- Back to Top Button -->
   <button id="backToTop">↑</button>
 
   <script>
@@ -148,6 +168,7 @@
           let card = document.createElement('div');
           card.className = 'item';
           card.innerHTML = `
+            <input type="checkbox" value="${item.name}">
             <img src="${item.image}" alt="${item.name}">
             <h3>${item.name}</h3>
             <p>${item.desc}</p>
@@ -158,17 +179,27 @@
       })
       .catch(err => console.error('Error loading menu:', err));
 
-    // Back to Top functionality
-    const backToTop = document.getElementById("backToTop");
-
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 300) {
-        backToTop.style.display = "block";
-      } else {
-        backToTop.style.display = "none";
+    // WhatsApp order functionality
+    document.getElementById('sendOrder').addEventListener('click', () => {
+      const selected = document.querySelectorAll('.item input[type="checkbox"]:checked');
+      if (selected.length === 0) {
+        alert('Please select at least one item');
+        return;
       }
+
+      let items = Array.from(selected).map(cb => cb.value);
+      let message = `Hello, I would like to order: ${items.join(', ')}`;
+      let restaurantNumber = "918970100123"; // replace with restaurant number
+      let whatsappUrl = `https://wa.me/${restaurantNumber}?text=${encodeURIComponent(message)}`;
+
+      window.open(whatsappUrl, '_blank');
     });
 
+    // Back to Top functionality
+    const backToTop = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => {
+      backToTop.style.display = window.scrollY > 300 ? "block" : "none";
+    });
     backToTop.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
