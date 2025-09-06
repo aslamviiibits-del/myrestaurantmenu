@@ -22,12 +22,23 @@
     "desc": "Choice of vanilla, chocolate, strawberry.",
     "price": "₹90",
     "image": "images/icecream.jpg"
-  }
-  ,
+  },
   {
     "name": "Chicken Biryani",
     "desc": "Wowwwwwwww",
     "price": "₹290",
     "image": "images/biryani.jpg"
+  },
+  {
+    "name": "French Fries",
+    "desc": "Amazing",
+    "price": "₹80",
+    "image": "images/frenchfries.jpg"
+  },
+  {
+    "name": "Samosa",
+    "desc": "Mouth Watering",
+    "price": "₹25",
+    "image": "images/samosa.jpg"
   }
 ]
