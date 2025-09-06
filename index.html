@@ -67,6 +67,11 @@
       }
       .quantity input {
         width: 50px;
+        text-align: center;
+      }
+      .quantity button {
+        padding: 5px 10px;
+        font-size: 16px;
       }
     }
 
@@ -114,6 +119,18 @@
       justify-content: center;
       align-items: center;
       gap: 5px;
+    }
+
+    .quantity button {
+      cursor: pointer;
+      border: none;
+      background: #e67e22;
+      color: #fff;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+    .quantity button:hover {
+      background: #d35400;
     }
 
     .item input[type="checkbox"] {
@@ -187,9 +204,9 @@
       .then(response => response.json())
       .then(data => {
         menuData = data;
-        let menuDiv = document.getElementById('menu');
+        const menuDiv = document.getElementById('menu');
         data.forEach(item => {
-          let card = document.createElement('div');
+          const card = document.createElement('div');
           card.className = 'item';
           card.innerHTML = `
             <input type="checkbox" value="${item.name}">
@@ -197,8 +214,10 @@
             <h3>${item.name}</h3>
             <p>${item.desc}</p>
             <p class="price">${item.price}</p>
-            <div class="quantity">
-              <label>Qty: <input type="number" min="1" value="1"></label>
+            <div class="quantity" style="display:none;">
+              <button class="decrease">−</button>
+              <input type="number" min="1" value="1">
+              <button class="increase">+</button>
             </div>
           `;
           menuDiv.appendChild(card);
@@ -206,15 +225,28 @@
       })
       .catch(err => console.error('Error loading menu:', err));
 
-    // Highlight selected card
+    // Highlight selected card & show quantity input
     document.addEventListener('change', function(e) {
       if (e.target && e.target.type === 'checkbox') {
-        let card = e.target.closest('.item');
+        const card = e.target.closest('.item');
         card.classList.toggle('selected', e.target.checked);
+        const qtyDiv = card.querySelector('.quantity');
+        qtyDiv.style.display = e.target.checked ? 'flex' : 'none';
       }
     });
 
-    // WhatsApp order with quantity
+    // Quantity + / − buttons
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('increase') || e.target.classList.contains('decrease')) {
+        const input = e.target.parentElement.querySelector('input');
+        let value = parseInt(input.value) || 1;
+        if (e.target.classList.contains('increase')) value++;
+        if (e.target.classList.contains('decrease')) value = Math.max(1, value - 1);
+        input.value = value;
+      }
+    });
+
+    // WhatsApp order with quantity and totals
     document.getElementById('sendOrder').addEventListener('click', () => {
       const selected = document.querySelectorAll('.item input[type="checkbox"]:checked');
       if (selected.length === 0) {
@@ -226,20 +258,20 @@
       let total = 0;
 
       selected.forEach(cb => {
-        let card = cb.closest('.item');
-        let qty = parseInt(card.querySelector('.quantity input').value) || 1;
-        let itemName = cb.value;
-        let item = menuData.find(i => i.name === itemName);
-        let priceNumber = parseFloat(item.price.replace(/[^0-9.]/g, "")) || 0;
-        let subtotal = priceNumber * qty;
+        const card = cb.closest('.item');
+        const qty = parseInt(card.querySelector('.quantity input').value) || 1;
+        const itemName = cb.value;
+        const item = menuData.find(i => i.name === itemName);
+        const priceNumber = parseFloat(item.price.replace(/[^0-9.]/g, "")) || 0;
+        const subtotal = priceNumber * qty;
         total += subtotal;
         messageLines.push(`- ${itemName} : ${item.price} x ${qty} = ₹${subtotal.toFixed(2)}`);
       });
 
       messageLines.push(`Total: ₹${total.toFixed(2)}`);
-      let message = `Hello, I would like to order:\n${messageLines.join('\n')}`;
-      let restaurantNumber = "918970100123"; // replace with actual number
-      let whatsappUrl = `https://wa.me/${restaurantNumber}?text=${encodeURIComponent(message)}`;
+      const message = `Hello, I would like to order:\n${messageLines.join('\n')}`;
+      const restaurantNumber = "918970100123"; // replace with actual number
+      const whatsappUrl = `https://wa.me/${restaurantNumber}?text=${encodeURIComponent(message)}`;
 
       window.open(whatsappUrl, '_blank');
     });
@@ -255,4 +287,3 @@
   </script>
 </body>
 </html>
-
