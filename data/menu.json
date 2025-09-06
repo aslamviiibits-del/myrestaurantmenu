@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Cheese Pizza",
+    "desc": "Classic Italian cheese pizza.",
+    "price": "₹250",
+    "image": "images/pizza.jpg"
+  },
+  {
+    "name": "Veggie Burger",
+    "desc": "Loaded with fresh veggies.",
+    "price": "₹180",
+    "image": "images/veggieburger.jpg"
+  },
+  {
+    "name": "White Sauce Pasta",
+    "desc": "Creamy and delicious.",
+    "price": "₹220",
+    "image": "images/pasta.jpg"
+  },
+  {
+    "name": "Ice Cream",
+    "desc": "Choice of vanilla, chocolate, strawberry.",
+    "price": "₹90",
+    "image": "images/icecream.jpg"
+  }
+]
