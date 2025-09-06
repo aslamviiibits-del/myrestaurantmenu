@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -72,7 +72,7 @@
       border-radius: 12px;
       padding: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
       position: relative;
     }
     .item:hover {
@@ -105,12 +105,24 @@
       font-size: 16px;
     }
 
+    /* Checkbox styling - top-right corner, larger */
     .item input[type="checkbox"] {
       position: absolute;
       top: 10px;
-      left: 10px;
-      transform: scale(1.3);
+      right: 10px;
+      transform: scale(2);
       cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      background-color: #fff;
+      border-radius: 4px;
+    }
+
+    /* Highlight selected card */
+    .item.selected {
+      border: 2px solid #e67e22;
+      box-shadow: 0 6px 15px rgba(230, 126, 34, 0.5);
+      background: rgba(255, 255, 255, 1);
     }
 
     #sendOrder {
@@ -179,6 +191,18 @@
       })
       .catch(err => console.error('Error loading menu:', err));
 
+    // Highlight selected card when checkbox is ticked
+    document.addEventListener('change', function(e) {
+      if (e.target && e.target.type === 'checkbox') {
+        let card = e.target.closest('.item');
+        if (e.target.checked) {
+          card.classList.add('selected');
+        } else {
+          card.classList.remove('selected');
+        }
+      }
+    });
+
     // WhatsApp order functionality
     document.getElementById('sendOrder').addEventListener('click', () => {
       const selected = document.querySelectorAll('.item input[type="checkbox"]:checked');
@@ -187,9 +211,9 @@
         return;
       }
 
-      let items = Array.from(selected).map(cb => cb.value);
-      let message = `Hello, I would like to order: ${items.join(', ')}`;
-      let restaurantNumber = "918970100123"; // replace with restaurant number
+      let items = Array.from(selected).map(cb => `- ${cb.value}`);
+      let message = `Hello, I would like to order:\n${items.join('\n')}`;
+      let restaurantNumber = "911234567890"; // replace with actual number
       let whatsappUrl = `https://wa.me/${restaurantNumber}?text=${encodeURIComponent(message)}`;
 
       window.open(whatsappUrl, '_blank');
