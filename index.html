@@ -65,6 +65,9 @@
       .price {
         font-size: 18px;
       }
+      .quantity input {
+        width: 50px;
+      }
     }
 
     .item {
@@ -103,6 +106,14 @@
       font-weight: bold;
       color: #e67e22;
       font-size: 16px;
+    }
+
+    .quantity {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
     }
 
     .item input[type="checkbox"] {
@@ -186,25 +197,24 @@
             <h3>${item.name}</h3>
             <p>${item.desc}</p>
             <p class="price">${item.price}</p>
+            <div class="quantity">
+              <label>Qty: <input type="number" min="1" value="1"></label>
+            </div>
           `;
           menuDiv.appendChild(card);
         });
       })
       .catch(err => console.error('Error loading menu:', err));
 
-    // Highlight selected card when checkbox is ticked
+    // Highlight selected card
     document.addEventListener('change', function(e) {
       if (e.target && e.target.type === 'checkbox') {
         let card = e.target.closest('.item');
-        if (e.target.checked) {
-          card.classList.add('selected');
-        } else {
-          card.classList.remove('selected');
-        }
+        card.classList.toggle('selected', e.target.checked);
       }
     });
 
-    // WhatsApp order with price calculation
+    // WhatsApp order with quantity
     document.getElementById('sendOrder').addEventListener('click', () => {
       const selected = document.querySelectorAll('.item input[type="checkbox"]:checked');
       if (selected.length === 0) {
@@ -216,22 +226,25 @@
       let total = 0;
 
       selected.forEach(cb => {
+        let card = cb.closest('.item');
+        let qty = parseInt(card.querySelector('.quantity input').value) || 1;
         let itemName = cb.value;
         let item = menuData.find(i => i.name === itemName);
         let priceNumber = parseFloat(item.price.replace(/[^0-9.]/g, "")) || 0;
-        total += priceNumber;
-        messageLines.push(`- ${itemName} : ${item.price}`);
+        let subtotal = priceNumber * qty;
+        total += subtotal;
+        messageLines.push(`- ${itemName} : ${item.price} x ${qty} = ₹${subtotal.toFixed(2)}`);
       });
 
       messageLines.push(`Total: ₹${total.toFixed(2)}`);
       let message = `Hello, I would like to order:\n${messageLines.join('\n')}`;
-      let restaurantNumber = "918970100123"; // replace with actual number
+      let restaurantNumber = "911234567890"; // replace with actual number
       let whatsappUrl = `https://wa.me/${restaurantNumber}?text=${encodeURIComponent(message)}`;
 
       window.open(whatsappUrl, '_blank');
     });
 
-    // Back to Top functionality
+    // Back to Top
     const backToTop = document.getElementById("backToTop");
     window.addEventListener("scroll", () => {
       backToTop.style.display = window.scrollY > 300 ? "block" : "none";
