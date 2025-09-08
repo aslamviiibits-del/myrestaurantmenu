@@ -40,5 +40,65 @@
     "desc": "Mouth Watering",
     "price": "₹25",
     "image": "images/samosa.jpg"
+  },
+  {
+    "name": "Margherita Pizza",
+    "desc": "Classic cheese and tomato pizza",
+    "price": "₹250",
+    "image": "https://images.unsplash.com/photo-1601924582971-5fa1f12b5f50?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Veg Burger",
+    "desc": "Delicious vegetable patty with fresh veggies",
+    "price": "₹150",
+    "image": "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Pasta Alfredo",
+    "desc": "Creamy Alfredo pasta with herbs",
+    "price": "₹220",
+    "image": "https://images.unsplash.com/photo-1603133872872-1c2c40a4f2c5?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Chicken Biryani",
+    "desc": "Spicy chicken biryani with aromatic rice",
+    "price": "₹320",
+    "image": "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Paneer Tikka",
+    "desc": "Grilled paneer cubes with spices",
+    "price": "₹200",
+    "image": "https://images.unsplash.com/photo-1604908177543-05f12022f1aa?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Caesar Salad",
+    "desc": "Fresh lettuce with Caesar dressing and croutons",
+    "price": "₹180",
+    "image": "https://images.unsplash.com/photo-1556911220-e15b29be8c12?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "French Fries",
+    "desc": "Crispy golden fries with ketchup",
+    "price": "₹100",
+    "image": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Chocolate Cake",
+    "desc": "Rich chocolate cake with frosting",
+    "price": "₹180",
+    "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Grilled Sandwich",
+    "desc": "Toasted sandwich with cheese and veggies",
+    "price": "₹160",
+    "image": "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "name": "Mango Smoothie",
+    "desc": "Fresh mango smoothie with ice",
+    "price": "₹120",
+    "image": "https://images.unsplash.com/photo-1571771897671-5e515f7a4f1b?auto=format&fit=crop&w=400&q=80"
   }
 ]
