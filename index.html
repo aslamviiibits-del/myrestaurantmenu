@@ -1,376 +1,254 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Restaurant Menu</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      text-align: center;
-      background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
-      background-size: cover;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: -1;
-    }
+<meta charset="UTF-8">
+<title>Restaurant Menu</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+  background-size: cover;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: -1;
+}
+h1 {
+  color: #fff;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+.menu {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+  margin-top: 30px;
+}
+@media screen and (max-width:1024px){
+  .menu { grid-template-columns: repeat(2,1fr); }
+}
+@media screen and (max-width:768px){
+  .menu { grid-template-columns:1fr !important; }
+  .item { width:95%; margin:0 auto; padding:12px; }
+  .item h3 { font-size:20px; }
+  .item p { font-size:15px; }
+  .price { font-size:18px; }
+}
+.item {
+  background: rgba(255,255,255,0.9);
+  border-radius:12px;
+  padding:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+  text-align:left;
+}
+.item:hover { transform: scale(1.05); }
+.item img { width:100%; height:150px; object-fit:cover; border-radius:8px; }
+.item h3 { margin:10px 0 5px; font-size:18px; color:#333; }
+.item p { margin:0; font-size:14px; color:#555; }
+.price { margin-top:5px; font-weight:bold; color:#e67e22; font-size:16px; }
+.item .actions { margin-top:10px; display:flex; align-items:center; gap:10px; }
+.item input[type="checkbox"] { transform:scale(1.5); cursor:pointer; }
+.quantity input { width:50px; padding:5px; text-align:center; }
+#paySendOrder {
+  margin-top:20px;
+  padding:15px 30px;
+  font-size:20px;
+  background-color:#25D366;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  transition:background 0.3s ease;
+  font-weight:bold;
+  box-shadow:0 4px 10px rgba(0,0,0,0.3);
+}
+#paySendOrder:hover { background-color:#128C7E; }
+#paySendOrder:disabled { background-color:#ccc; cursor:not-allowed; box-shadow:none; }
 
-    h1 {
-      color: #fff;
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 10px;
-    }
-
-    .menu {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-top: 30px;
-    }
-
-    @media screen and (max-width: 1024px) {
-      .menu {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media screen and (max-width: 768px) {
-      .menu {
-        grid-template-columns: 1fr !important;
-      }
-      .item {
-        width: 95%;
-        margin: 0 auto;
-        padding: 12px;
-      }
-      .item h3 {
-        font-size: 20px;
-      }
-      .item p {
-        font-size: 15px;
-      }
-      .price {
-        font-size: 18px;
-      }
-    }
-
-    .item {
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease;
-      text-align: left;
-    }
-    .item:hover {
-      transform: scale(1.05);
-    }
-
-    .item img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .item h3 {
-      margin: 10px 0 5px;
-      font-size: 18px;
-      color: #333;
-    }
-
-    .item p {
-      margin: 0;
-      font-size: 14px;
-      color: #555;
-    }
-
-    .price {
-      margin-top: 5px;
-      font-weight: bold;
-      color: #e67e22;
-      font-size: 16px;
-    }
-
-    .item .actions {
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .item input[type="checkbox"] {
-      transform: scale(1.5);
-      cursor: pointer;
-    }
-
-    .quantity input {
-      width: 50px;
-      padding: 5px;
-      text-align: center;
-    }
-
-    #payOrder, #sendWhatsApp {
-      margin-top: 20px;
-      padding: 15px 30px;
-      font-size: 20px;
-      background-color: #25D366;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      font-weight: bold;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-    #payOrder:hover, #sendWhatsApp:hover {
-      background-color: #128C7E;
-    }
-    #payOrder:disabled, #sendWhatsApp:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-
-    @media screen and (max-width: 768px) {
-      #payOrder, #sendWhatsApp {
-        position: fixed;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        font-size: 22px;
-        padding: 18px;
-        border-radius: 12px;
-        z-index: 2000;
-      }
-      #payOrder { bottom: 80px; }
-      #sendWhatsApp { bottom: 15px; }
-      #backToTop { display: none !important; }
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-8px); }
-      60% { transform: translateY(-4px); }
-    }
-    .bounce { animation: bounce 0.6s; }
-
-    #orderSummary {
-      font-size: 22px;
-      font-weight: bold;
-      color: #fff;
-      margin-bottom: 10px;
-      background: rgba(0,0,0,0.6);
-      padding: 10px 15px;
-      border-radius: 10px;
-      display: inline-block;
-    }
-
-    #cartHeader {
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    #toggleCart { font-size: 18px; margin-left: 10px; color: #e67e22; }
-
-    #cartPreview {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease-in-out, padding 0.3s ease, opacity 0.3s ease;
-      opacity: 0;
-      padding-left: 20px;
-      font-size: 18px;
-      color: #fff;
-      list-style-type: disc;
-      text-align: left;
-    }
-    #cartPreview.open { max-height: 300px; padding-top: 10px; opacity: 1; }
-    #cartPreview li { margin-bottom: 6px; }
-
-    #toast {
-      visibility: hidden;
-      min-width: 200px;
-      max-width: 300px;
-      margin-left: -150px;
-      color: #fff;
-      text-align: center;
-      border-radius: 8px;
-      padding: 14px;
-      position: fixed;
-      z-index: 3000;
-      left: 50%;
-      bottom: 120px;
-      font-size: 16px;
-      opacity: 0;
-      transition: opacity 0.5s, bottom 0.5s;
-    }
-    #toast.show { visibility: visible; opacity: 1; bottom: 150px; }
-    #toast.added { background-color: #27ae60; }
-    #toast.removed { background-color: #e74c3c; }
-
-    #backToTop {
-      position: fixed; bottom: 20px; right: 20px;
-      background: #e67e22; color: #fff; border: none;
-      border-radius: 50%; padding: 12px 16px; font-size: 20px;
-      cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      display: none; transition: opacity 0.3s ease; z-index: 1000;
-    }
-    #backToTop:hover { background: #d35400; }
-  </style>
+@media screen and (max-width:768px){
+  #paySendOrder {
+    position:fixed; left:50%; transform:translateX(-50%);
+    width:90%; font-size:22px; padding:18px; border-radius:12px; z-index:2000; bottom:15px;
+  }
+  #backToTop { display:none !important; }
+}
+#orderSummary {
+  font-size:22px;
+  font-weight:bold;
+  color:#fff;
+  margin-bottom:10px;
+  background: rgba(0,0,0,0.6);
+  padding:10px 15px;
+  border-radius:10px;
+  display:inline-block;
+}
+#cartHeader { cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+#toggleCart { font-size:18px; margin-left:10px; color:#e67e22; }
+#cartPreview {
+  max-height:0; overflow:hidden;
+  transition:max-height 0.4s ease-in-out,padding 0.3s ease,opacity 0.3s ease;
+  opacity:0;
+  padding-left:20px;
+  font-size:18px;
+  color:#fff;
+  list-style-type:disc;
+  text-align:left;
+}
+#cartPreview.open { max-height:300px; padding-top:10px; opacity:1; }
+#cartPreview li { margin-bottom:6px; }
+#toast {
+  visibility:hidden;
+  min-width:200px; max-width:300px;
+  margin-left:-150px;
+  color:#fff; text-align:center;
+  border-radius:8px; padding:14px;
+  position:fixed; z-index:3000; left:50%; bottom:120px; font-size:16px;
+  opacity:0; transition:opacity 0.5s,bottom 0.5s;
+}
+#toast.show { visibility:visible; opacity:1; bottom:150px; }
+#toast.added { background-color:#27ae60; }
+#toast.removed { background-color:#e74c3c; }
+#backToTop {
+  position:fixed; bottom:20px; right:20px;
+  background:#e67e22; color:#fff; border:none;
+  border-radius:50%; padding:12px 16px; font-size:20px;
+  cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3);
+  display:none; transition:opacity 0.3s ease; z-index:1000;
+}
+#backToTop:hover { background:#d35400; }
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>🍴 Our Food Menu</h1>
-    <div class="menu" id="menu"></div>
-    <div id="orderSummary">
-      <div id="cartHeader">🧾 Total: ₹0.00 <span id="toggleCart">▼</span></div>
-      <ul id="cartPreview"></ul>
-    </div>
-    <button id="payOrder" disabled>Pay Now</button>
-    <button id="sendWhatsApp" disabled>Send Order to WhatsApp</button>
-  </div>
+<div class="container">
+<h1>🍴 Our Food Menu</h1>
+<div class="menu" id="menu"></div>
 
-  <div id="toast"></div>
-  <button id="backToTop">↑</button>
+<div id="orderSummary">
+  <div id="cartHeader">🧾 Total: ₹0.00 <span id="toggleCart">▼</span></div>
+  <ul id="cartPreview"></ul>
+</div>
 
-  <script>
-    let menuData = [];
+<button id="paySendOrder" disabled>Pay & Send Order</button>
+<div id="toast"></div>
+<button id="backToTop">↑</button>
+</div>
 
-    fetch('data/menu.json')
-      .then(res => res.json())
-      .then(data => {
-        menuData = data;
-        const menuDiv = document.getElementById('menu');
-        data.forEach(item => {
-          const card = document.createElement('div');
-          card.className = 'item';
-          card.innerHTML = `
-            <img src="${item.image}" alt="${item.name}">
-            <h3>${item.name}</h3>
-            <p>${item.desc}</p>
-            <p class="price">${item.price}</p>
-            <div class="actions">
-              <input type="checkbox" value="${item.name}">
-              <label>Select</label>
-              <div class="quantity">
-                <label>Qty:</label>
-                <input type="number" value="1" min="1">
-              </div>
-            </div>
-          `;
-          const checkbox = card.querySelector('input[type="checkbox"]');
-          const qtyInput = card.querySelector('.quantity input');
+<script>
+let menuData = [];
 
-          checkbox.addEventListener('change', () => {
-            updateTotal();
-            if (checkbox.checked) showToast(`✅ ${checkbox.value} added`,"added");
-            else showToast(`❌ ${checkbox.value} removed`,"removed");
-          });
-          qtyInput.addEventListener('change', updateTotal);
-          menuDiv.appendChild(card);
-        });
+fetch('data/menu.json')
+  .then(res => res.json())
+  .then(data => {
+    menuData = data;
+    const menuDiv = document.getElementById('menu');
+    data.forEach(item => {
+      const card = document.createElement('div');
+      card.className='item';
+      card.innerHTML=`
+        <img src="${item.image}" alt="${item.name}">
+        <h3>${item.name}</h3>
+        <p>${item.desc}</p>
+        <p class="price">${item.price}</p>
+        <div class="actions">
+          <input type="checkbox" value="${item.name}"><label>Select</label>
+          <div class="quantity"><label>Qty:</label><input type="number" value="1" min="1"></div>
+        </div>
+      `;
+      const checkbox = card.querySelector('input[type="checkbox"]');
+      const qtyInput = card.querySelector('.quantity input');
+
+      checkbox.addEventListener('change',()=>{
+        updateTotal();
+        if(checkbox.checked) showToast(`✅ ${checkbox.value} added`,"added");
+        else showToast(`❌ ${checkbox.value} removed`,"removed");
       });
-
-    function updateTotal() {
-      const selected = document.querySelectorAll('.item input[type="checkbox"]:checked');
-      let total = 0;
-      const cartList = document.getElementById('cartPreview');
-      cartList.innerHTML = '';
-
-      selected.forEach(cb => {
-        const card = cb.closest('.item');
-        const qty = parseInt(card.querySelector('.quantity input').value) || 1;
-        const item = menuData.find(i => i.name === cb.value);
-        const priceNumber = parseFloat(item.price.replace(/[^0-9.]/g,""))||0;
-        total += priceNumber*qty;
-
-        const li = document.createElement('li');
-        li.textContent = `${cb.value} x ${qty} = ₹${(priceNumber*qty).toFixed(2)}`;
-        cartList.appendChild(li);
-      });
-
-      document.getElementById('cartHeader').childNodes[0].nodeValue = `🧾 Total: ₹${total.toFixed(2)} `;
-
-      const payBtn = document.getElementById('payOrder');
-      const waBtn = document.getElementById('sendWhatsApp');
-      if (selected.length === 0) { payBtn.disabled = waBtn.disabled = true; }
-      else { payBtn.disabled = waBtn.disabled = false; payBtn.classList.add('bounce'); }
-    }
-
-    document.getElementById('payOrder').addEventListener('click', () => {
-      const total = parseFloat(document.getElementById('cartHeader').childNodes[0].nodeValue.replace(/[^0-9.]/g,""))||0;
-      if(total<=0) return alert("Please select items");
-
-      const merchantVPA = "8970100123@ibl"; // replace with your UPI ID
-      const merchantName = "Aslam";
-
-     const phonePeLink = `https://merchant.phonepe.com/v3/merchantPayment?pa=${merchantVPA}&pn=${encodeURIComponent(merchantName)}&am=${total.toFixed(2)}&cu=INR`;
-window.location.href = phonePeLink;
-
-      //const upiLink = `upi://pay?pa=${merchantVPA}&pn=${encodeURIComponent(merchantName)}&am=${total.toFixed(2)}&cu=INR`;
-
-      // Store order details in localStorage for WhatsApp
-      const selected = document.querySelectorAll('.item input[type="checkbox"]:checked');
-      let orderDetails = "Hello, I would like to order:\n\n";
-      selected.forEach(cb => {
-        const card = cb.closest('.item');
-        const qty = parseInt(card.querySelector('.quantity input').value) || 1;
-        const item = menuData.find(i => i.name === cb.value);
-        const priceNumber = parseFloat(item.price.replace(/[^0-9.]/g,""))||0;
-        orderDetails += `🍽 ${cb.value} x ${qty} = ₹${(priceNumber*qty).toFixed(2)}\n`;
-      });
-      orderDetails += `\n🧾 Total: ₹${total.toFixed(2)}`;
-      localStorage.setItem('orderDetails', orderDetails);
-
-      // Redirect to UPI payment
-      window.location.href = upiLink;
+      qtyInput.addEventListener('change',updateTotal);
+      menuDiv.appendChild(card);
     });
+  });
 
-    document.getElementById('sendWhatsApp').addEventListener('click', () => {
-      const orderDetails = localStorage.getItem('orderDetails');
-      if(!orderDetails) return alert("No order found! Complete payment first.");
+function updateTotal(){
+  const selected = document.querySelectorAll('.item input[type="checkbox"]:checked');
+  let total=0;
+  const cartList=document.getElementById('cartPreview');
+  cartList.innerHTML='';
+  selected.forEach(cb=>{
+    const card=cb.closest('.item');
+    const qty=parseInt(card.querySelector('.quantity input').value)||1;
+    const item=menuData.find(i=>i.name===cb.value);
+    const priceNumber=parseFloat(item.price.replace(/[^0-9.]/g,""))||0;
+    total+=priceNumber*qty;
+    const li=document.createElement('li');
+    li.textContent=`${cb.value} x ${qty} = ₹${(priceNumber*qty).toFixed(2)}`;
+    cartList.appendChild(li);
+  });
+  document.getElementById('cartHeader').childNodes[0].nodeValue=`🧾 Total: ₹${total.toFixed(2)} `;
+  document.getElementById('paySendOrder').disabled=selected.length===0;
+}
 
-      const phone = "918970100123"; // Restaurant WhatsApp number
-      const url = `https://wa.me/${phone}?text=${encodeURIComponent(orderDetails)}`;
-      window.open(url,"_blank");
-      localStorage.removeItem('orderDetails');
-    });
+document.getElementById('paySendOrder').addEventListener('click',()=>{
+  const selected = document.querySelectorAll('.item input[type="checkbox"]:checked');
+  if(selected.length===0) return alert("Please select items first.");
 
-    document.getElementById('cartHeader').addEventListener('click', () => {
-      const cart = document.getElementById('cartPreview');
-      const toggleIcon = document.getElementById('toggleCart');
-      if(cart.classList.contains('open')) { cart.classList.remove('open'); toggleIcon.textContent='▼'; }
-      else { cart.classList.add('open'); toggleIcon.textContent='▲'; }
-      if(navigator.vibrate) navigator.vibrate(30);
-    });
+  let total=0;
+  let orderDetails="Hello, I would like to order:\n\n";
+  selected.forEach(cb=>{
+    const card=cb.closest('.item');
+    const qty=parseInt(card.querySelector('.quantity input').value)||1;
+    const item=menuData.find(i=>i.name===cb.value);
+    const priceNumber=parseFloat(item.price.replace(/[^0-9.]/g,""))||0;
+    const subtotal=priceNumber*qty;
+    total+=subtotal;
+    orderDetails+=`🍽 ${cb.value} x ${qty} = ₹${subtotal.toFixed(2)}\n`;
+  });
+  orderDetails+=`\n🧾 Total: ₹${total.toFixed(2)}`;
+  localStorage.setItem('orderDetails',orderDetails);
 
-    function showToast(message,type) {
-      const toast = document.getElementById("toast");
-      toast.textContent = message;
-      toast.className = `show ${type}`;
-      if(navigator.vibrate) navigator.vibrate(20);
-      setTimeout(()=>{ toast.className=toast.className.replace("show",""); },2000);
-    }
+  const choice = confirm("Click OK to pay via UPI app (PhonePe/Google Pay), Cancel to send order directly to WhatsApp.");
 
-    const backToTop = document.getElementById("backToTop");
-    window.addEventListener("scroll",()=>{ backToTop.style.display = (window.scrollY>300)? "block":"none"; });
-    backToTop.addEventListener("click",()=>{ window.scrollTo({top:0,behavior:"smooth"}); });
-  </script>
+  if(choice){
+    const merchantVPA="8970100123@ibl"; // replace with your UPI ID
+    const merchantName="Aslam";
+    const upiLink=`upi://pay?pa=${merchantVPA}&pn=${encodeURIComponent(merchantName)}&am=${total.toFixed(2)}&cu=INR`;
+    window.location.href=upiLink;
+  } else {
+    const phone="918970100123"; // restaurant WhatsApp
+    const waUrl=`https://wa.me/${phone}?text=${encodeURIComponent(orderDetails)}`;
+    window.open(waUrl,"_blank");
+  }
+});
+
+document.getElementById('cartHeader').addEventListener('click',()=>{
+  const cart=document.getElementById('cartPreview');
+  const toggleIcon=document.getElementById('toggleCart');
+  if(cart.classList.contains('open')) { cart.classList.remove('open'); toggleIcon.textContent='▼'; }
+  else { cart.classList.add('open'); toggleIcon.textContent='▲'; }
+  if(navigator.vibrate) navigator.vibrate(30);
+});
+
+function showToast(message,type){
+  const toast=document.getElementById("toast");
+  toast.textContent=message;
+  toast.className=`show ${type}`;
+  if(navigator.vibrate) navigator.vibrate(20);
+  setTimeout(()=>{ toast.className=toast.className.replace("show",""); },2000);
+}
+
+const backToTop=document.getElementById("backToTop");
+window.addEventListener("scroll",()=>{ backToTop.style.display=(window.scrollY>300)?"block":"none"; });
+backToTop.addEventListener("click",()=>{ window.scrollTo({top:0,behavior:"smooth"}); });
+</script>
 </body>
 </html>
-
