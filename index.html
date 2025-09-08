@@ -318,7 +318,11 @@
 
       const merchantVPA = "8970100123@ibl"; // replace with your UPI ID
       const merchantName = "Aslam";
-      const upiLink = `upi://pay?pa=${merchantVPA}&pn=${encodeURIComponent(merchantName)}&am=${total.toFixed(2)}&cu=INR`;
+
+     const phonePeLink = `https://merchant.phonepe.com/v3/merchantPayment?pa=${merchantVPA}&pn=${encodeURIComponent(merchantName)}&am=${total.toFixed(2)}&cu=INR`;
+window.location.href = phonePeLink;
+
+      //const upiLink = `upi://pay?pa=${merchantVPA}&pn=${encodeURIComponent(merchantName)}&am=${total.toFixed(2)}&cu=INR`;
 
       // Store order details in localStorage for WhatsApp
       const selected = document.querySelectorAll('.item input[type="checkbox"]:checked');
@@ -369,3 +373,4 @@
   </script>
 </body>
 </html>
+
