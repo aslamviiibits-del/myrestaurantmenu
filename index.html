@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -65,14 +65,6 @@
       .price {
         font-size: 18px;
       }
-      .quantity input {
-        width: 50px;
-        text-align: center;
-      }
-      .quantity button {
-        padding: 5px 10px;
-        font-size: 16px;
-      }
     }
 
     .item {
@@ -80,8 +72,8 @@
       border-radius: 12px;
       padding: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      position: relative;
+      transition: transform 0.2s ease;
+      text-align: left;
     }
     .item:hover {
       transform: scale(1.05);
@@ -113,57 +105,167 @@
       font-size: 16px;
     }
 
-    .quantity {
+    .item .actions {
       margin-top: 10px;
       display: flex;
-      justify-content: center;
       align-items: center;
-      gap: 5px;
-    }
-
-    .quantity button {
-      cursor: pointer;
-      border: none;
-      background: #e67e22;
-      color: #fff;
-      border-radius: 4px;
-      transition: background 0.3s;
-    }
-    .quantity button:hover {
-      background: #d35400;
+      gap: 10px;
     }
 
     .item input[type="checkbox"] {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      transform: scale(2);
+      transform: scale(1.5);
       cursor: pointer;
-      z-index: 10;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-      background-color: #fff;
-      border-radius: 4px;
     }
 
-    .item.selected {
-      border: 2px solid #e67e22;
-      box-shadow: 0 6px 15px rgba(230, 126, 34, 0.5);
-      background: rgba(255, 255, 255, 1);
+    .quantity input {
+      width: 50px;
+      padding: 5px;
+      text-align: center;
     }
 
     #sendOrder {
       margin-top: 20px;
-      padding: 12px 25px;
-      font-size: 18px;
-      background-color: #e67e22;
+      padding: 15px 30px;
+      font-size: 20px;
+      background-color: #25D366;
       color: #fff;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
       transition: background 0.3s ease;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
     #sendOrder:hover {
-      background-color: #d35400;
+      background-color: #128C7E;
+    }
+    #sendOrder:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    @media screen and (max-width: 768px) {
+      #sendOrder {
+        position: fixed;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        font-size: 22px;
+        padding: 18px;
+        border-radius: 12px;
+        z-index: 2000;
+      }
+      #backToTop {
+        display: none !important;
+      }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-8px);
+      }
+      60% {
+        transform: translateY(-4px);
+      }
+    }
+    #sendOrder.bounce {
+      animation: bounce 0.6s;
+    }
+
+    #orderSummary {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    #cartHeader {
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #toggleCart {
+      font-size: 18px;
+      margin-left: 10px;
+      color: #e67e22;
+    }
+
+    #cartPreview {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-in-out, padding 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+      padding-left: 20px;
+      font-size: 18px;
+      color: #34495e;
+      list-style-type: disc;
+      text-align: left;
+    }
+
+    #cartPreview.open {
+      max-height: 300px;
+      padding-top: 10px;
+      opacity: 1;
+    }
+
+    #cartPreview li {
+      margin-bottom: 6px;
+    }
+
+    @media screen and (max-width: 768px) {
+      #orderSummary {
+        position: fixed;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        padding: 10px 15px;
+        z-index: 1500;
+      }
+      #cartPreview {
+        max-height: 0;
+      }
+    }
+
+    #toast {
+      visibility: hidden;
+      min-width: 200px;
+      max-width: 300px;
+      margin-left: -150px;
+      color: #fff;
+      text-align: center;
+      border-radius: 8px;
+      padding: 14px;
+      position: fixed;
+      z-index: 3000;
+      left: 50%;
+      bottom: 120px;
+      font-size: 16px;
+      opacity: 0;
+      transition: opacity 0.5s, bottom 0.5s;
+    }
+    #toast.show {
+      visibility: visible;
+      opacity: 1;
+      bottom: 150px;
+    }
+    #toast.added {
+      background-color: #27ae60;
+    }
+    #toast.removed {
+      background-color: #e74c3c;
     }
 
     #backToTop {
@@ -191,95 +293,145 @@
   <div class="container">
     <h1>🍴 Our Food Menu</h1>
     <div class="menu" id="menu"></div>
-    <button id="sendOrder">Send Order via WhatsApp</button>
   </div>
 
+  <div id="orderSummary">
+    <div id="cartHeader">🧾 Total: ₹0.00 <span id="toggleCart">▼</span></div>
+    <ul id="cartPreview"></ul>
+  </div>
+
+  <button id="sendOrder" disabled>Send Order via WhatsApp</button>
+
+  <div id="toast"></div>
   <button id="backToTop">↑</button>
 
   <script>
     let menuData = [];
 
-    // Load menu from JSON
     fetch('data/menu.json')
       .then(response => response.json())
       .then(data => {
         menuData = data;
-        const menuDiv = document.getElementById('menu');
+        let menuDiv = document.getElementById('menu');
         data.forEach(item => {
-          const card = document.createElement('div');
+          let card = document.createElement('div');
           card.className = 'item';
           card.innerHTML = `
-            <input type="checkbox" value="${item.name}">
             <img src="${item.image}" alt="${item.name}">
             <h3>${item.name}</h3>
             <p>${item.desc}</p>
             <p class="price">${item.price}</p>
-            <div class="quantity" style="display:none;">
-              <button class="decrease">−</button>
-              <input type="number" min="1" value="1">
-              <button class="increase">+</button>
+            <div class="actions">
+              <input type="checkbox" value="${item.name}">
+              <label>Select</label>
+              <div class="quantity">
+                <label>Qty:</label>
+                <input type="number" value="1" min="1">
+              </div>
             </div>
           `;
+          let checkbox = card.querySelector('input[type="checkbox"]');
+          let qtyInput = card.querySelector('.quantity input');
+          checkbox.addEventListener('change', () => {
+            updateTotal();
+            if (checkbox.checked) {
+              showToast(`✅ ${checkbox.value} added`, "added");
+            } else {
+              showToast(`❌ ${checkbox.value} removed`, "removed");
+            }
+          });
+          qtyInput.addEventListener('change', updateTotal);
           menuDiv.appendChild(card);
         });
       })
       .catch(err => console.error('Error loading menu:', err));
 
-    // Highlight selected card & show quantity input
-    document.addEventListener('change', function(e) {
-      if (e.target && e.target.type === 'checkbox') {
-        const card = e.target.closest('.item');
-        card.classList.toggle('selected', e.target.checked);
-        const qtyDiv = card.querySelector('.quantity');
-        qtyDiv.style.display = e.target.checked ? 'flex' : 'none';
-      }
-    });
+    function updateTotal() {
+      const selected = document.querySelectorAll('.item input[type="checkbox"]:checked');
+      let total = 0;
+      let cartList = document.getElementById('cartPreview');
+      cartList.innerHTML = '';
 
-    // Quantity + / − buttons
-    document.addEventListener('click', function(e) {
-      if (e.target.classList.contains('increase') || e.target.classList.contains('decrease')) {
-        const input = e.target.parentElement.querySelector('input');
-        let value = parseInt(input.value) || 1;
-        if (e.target.classList.contains('increase')) value++;
-        if (e.target.classList.contains('decrease')) value = Math.max(1, value - 1);
-        input.value = value;
-      }
-    });
+      selected.forEach(cb => {
+        let card = cb.closest('.item');
+        let qty = parseInt(card.querySelector('.quantity input').value) || 1;
+        let itemName = cb.value;
+        let item = menuData.find(i => i.name === itemName);
+        let priceNumber = parseFloat(item.price.replace(/[^0-9.]/g, "")) || 0;
+        let subtotal = priceNumber * qty;
+        total += subtotal;
 
-    // WhatsApp order with quantity and totals
+        let li = document.createElement('li');
+        li.textContent = `${itemName} x ${qty} = ₹${subtotal.toFixed(2)}`;
+        cartList.appendChild(li);
+      });
+
+      document.getElementById('cartHeader').childNodes[0].nodeValue = `🧾 Total: ₹${total.toFixed(2)} `;
+
+      const sendBtn = document.getElementById('sendOrder');
+      if (selected.length === 0) {
+        sendBtn.disabled = true;
+      } else {
+        sendBtn.disabled = false;
+        sendBtn.classList.remove('bounce');
+        void sendBtn.offsetWidth;
+        sendBtn.classList.add('bounce');
+      }
+    }
+
     document.getElementById('sendOrder').addEventListener('click', () => {
       const selected = document.querySelectorAll('.item input[type="checkbox"]:checked');
-      if (selected.length === 0) {
-        alert('Please select at least one item');
-        return;
-      }
-
-      let messageLines = [];
+      let message = "Hello, I would like to order:\n\n";
       let total = 0;
 
       selected.forEach(cb => {
-        const card = cb.closest('.item');
-        const qty = parseInt(card.querySelector('.quantity input').value) || 1;
-        const itemName = cb.value;
-        const item = menuData.find(i => i.name === itemName);
-        const priceNumber = parseFloat(item.price.replace(/[^0-9.]/g, "")) || 0;
-        const subtotal = priceNumber * qty;
+        let card = cb.closest('.item');
+        let qty = parseInt(card.querySelector('.quantity input').value) || 1;
+        let itemName = cb.value;
+        let item = menuData.find(i => i.name === itemName);
+        let priceNumber = parseFloat(item.price.replace(/[^0-9.]/g, "")) || 0;
+        let subtotal = priceNumber * qty;
         total += subtotal;
-        messageLines.push(`- ${itemName} : ${item.price} x ${qty} = ₹${subtotal.toFixed(2)}`);
+
+        message += `🍽 ${itemName} x ${qty} = ₹${subtotal.toFixed(2)}\n`;
       });
 
-      messageLines.push(`Total: ₹${total.toFixed(2)}`);
-      const message = `Hello, I would like to order:\n${messageLines.join('\n')}`;
-      const restaurantNumber = "918970100123"; // replace with actual number
-      const whatsappUrl = `https://wa.me/${restaurantNumber}?text=${encodeURIComponent(message)}`;
-
-      window.open(whatsappUrl, '_blank');
+      message += `\n🧾 Total: ₹${total.toFixed(2)}`;
+      const phone = "919876543210"; // Restaurant WhatsApp number
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank");
     });
 
-    // Back to Top
+    document.getElementById('cartHeader').addEventListener('click', () => {
+      const cart = document.getElementById('cartPreview');
+      const toggleIcon = document.getElementById('toggleCart');
+      if (cart.classList.contains('open')) {
+        cart.classList.remove('open');
+        toggleIcon.textContent = '▼';
+      } else {
+        cart.classList.add('open');
+        toggleIcon.textContent = '▲';
+      }
+      if (navigator.vibrate) navigator.vibrate(30);
+    });
+
+    function showToast(message, type) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.className = `show ${type}`;
+      if (navigator.vibrate) navigator.vibrate(20);
+      setTimeout(() => {
+        toast.className = toast.className.replace("show", "");
+      }, 2000);
+    }
+
     const backToTop = document.getElementById("backToTop");
     window.addEventListener("scroll", () => {
-      backToTop.style.display = window.scrollY > 300 ? "block" : "none";
+      if (window.scrollY > 300) {
+        backToTop.style.display = "block";
+      } else {
+        backToTop.style.display = "none";
+      }
     });
     backToTop.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
