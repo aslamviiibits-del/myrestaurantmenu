@@ -123,7 +123,7 @@
       text-align: center;
     }
 
-    #sendOrder {
+    #payOrder, #sendWhatsApp {
       margin-top: 20px;
       padding: 15px 30px;
       font-size: 20px;
@@ -136,19 +136,18 @@
       font-weight: bold;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
-    #sendOrder:hover {
+    #payOrder:hover, #sendWhatsApp:hover {
       background-color: #128C7E;
     }
-    #sendOrder:disabled {
+    #payOrder:disabled, #sendWhatsApp:disabled {
       background-color: #ccc;
       cursor: not-allowed;
       box-shadow: none;
     }
 
     @media screen and (max-width: 768px) {
-      #sendOrder {
+      #payOrder, #sendWhatsApp {
         position: fixed;
-        bottom: 15px;
         left: 50%;
         transform: translateX(-50%);
         width: 90%;
@@ -157,51 +156,37 @@
         border-radius: 12px;
         z-index: 2000;
       }
-      #backToTop {
-        display: none !important;
-      }
+      #payOrder { bottom: 80px; }
+      #sendWhatsApp { bottom: 15px; }
+      #backToTop { display: none !important; }
     }
 
     @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-      }
-      40% {
-        transform: translateY(-8px);
-      }
-      60% {
-        transform: translateY(-4px);
-      }
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-8px); }
+      60% { transform: translateY(-4px); }
     }
-    #sendOrder.bounce {
-      animation: bounce 0.6s;
-    }
+    .bounce { animation: bounce 0.6s; }
 
-#orderSummary {
-  font-size: 22px;        /* larger font */
-  font-weight: bold;      /* bold text */
-  color: #fff;            /* white text */
-  margin-bottom: 10px;
-  background: rgba(0, 0, 0, 0.6); /* semi-transparent black */
-  padding: 10px 15px;
-  border-radius: 10px;
-  display: inline-block;   /* fits content */
-}
+    #orderSummary {
+      font-size: 22px;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 10px;
+      background: rgba(0,0,0,0.6);
+      padding: 10px 15px;
+      border-radius: 10px;
+      display: inline-block;
+    }
 
     #cartHeader {
-      font-size: 20px;
-      font-weight: bold;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    #toggleCart {
-      font-size: 18px;
-      margin-left: 10px;
-      color: #e67e22;
-    }
+    #toggleCart { font-size: 18px; margin-left: 10px; color: #e67e22; }
 
     #cartPreview {
       max-height: 0;
@@ -210,38 +195,12 @@
       opacity: 0;
       padding-left: 20px;
       font-size: 18px;
-      color: #34495e;
+      color: #fff;
       list-style-type: disc;
       text-align: left;
     }
-
-    #cartPreview.open {
-      max-height: 300px;
-      padding-top: 10px;
-      opacity: 1;
-    }
-
-    #cartPreview li {
-      margin-bottom: 6px;
-    }
-
-    @media screen and (max-width: 768px) {
-      #orderSummary {
-        position: fixed;
-        bottom: 80px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        padding: 10px 15px;
-        z-index: 1500;
-      }
-      #cartPreview {
-        max-height: 0;
-      }
-    }
+    #cartPreview.open { max-height: 300px; padding-top: 10px; opacity: 1; }
+    #cartPreview li { margin-bottom: 6px; }
 
     #toast {
       visibility: hidden;
@@ -260,51 +219,31 @@
       opacity: 0;
       transition: opacity 0.5s, bottom 0.5s;
     }
-    #toast.show {
-      visibility: visible;
-      opacity: 1;
-      bottom: 150px;
-    }
-    #toast.added {
-      background-color: #27ae60;
-    }
-    #toast.removed {
-      background-color: #e74c3c;
-    }
+    #toast.show { visibility: visible; opacity: 1; bottom: 150px; }
+    #toast.added { background-color: #27ae60; }
+    #toast.removed { background-color: #e74c3c; }
 
     #backToTop {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #e67e22;
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      padding: 12px 16px;
-      font-size: 20px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      display: none;
-      transition: opacity 0.3s ease;
-      z-index: 1000;
+      position: fixed; bottom: 20px; right: 20px;
+      background: #e67e22; color: #fff; border: none;
+      border-radius: 50%; padding: 12px 16px; font-size: 20px;
+      cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      display: none; transition: opacity 0.3s ease; z-index: 1000;
     }
-    #backToTop:hover {
-      background: #d35400;
-    }
+    #backToTop:hover { background: #d35400; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>🍴 Our Food Menu</h1>
     <div class="menu" id="menu"></div>
+    <div id="orderSummary">
+      <div id="cartHeader">🧾 Total: ₹0.00 <span id="toggleCart">▼</span></div>
+      <ul id="cartPreview"></ul>
+    </div>
+    <button id="payOrder" disabled>Pay Now</button>
+    <button id="sendWhatsApp" disabled>Send Order to WhatsApp</button>
   </div>
-
-  <div id="orderSummary">
-    <div id="cartHeader">🧾 Total: ₹0.00 <span id="toggleCart">▼</span></div>
-    <ul id="cartPreview"></ul>
-  </div>
-
-  <button id="sendOrder" disabled>Send Order via WhatsApp</button>
 
   <div id="toast"></div>
   <button id="backToTop">↑</button>
@@ -313,12 +252,12 @@
     let menuData = [];
 
     fetch('data/menu.json')
-      .then(response => response.json())
+      .then(res => res.json())
       .then(data => {
         menuData = data;
-        let menuDiv = document.getElementById('menu');
+        const menuDiv = document.getElementById('menu');
         data.forEach(item => {
-          let card = document.createElement('div');
+          const card = document.createElement('div');
           card.className = 'item';
           card.innerHTML = `
             <img src="${item.image}" alt="${item.name}">
@@ -334,115 +273,99 @@
               </div>
             </div>
           `;
-          let checkbox = card.querySelector('input[type="checkbox"]');
-          let qtyInput = card.querySelector('.quantity input');
+          const checkbox = card.querySelector('input[type="checkbox"]');
+          const qtyInput = card.querySelector('.quantity input');
+
           checkbox.addEventListener('change', () => {
             updateTotal();
-            if (checkbox.checked) {
-              showToast(`✅ ${checkbox.value} added`, "added");
-            } else {
-              showToast(`❌ ${checkbox.value} removed`, "removed");
-            }
+            if (checkbox.checked) showToast(`✅ ${checkbox.value} added`,"added");
+            else showToast(`❌ ${checkbox.value} removed`,"removed");
           });
           qtyInput.addEventListener('change', updateTotal);
           menuDiv.appendChild(card);
         });
-      })
-      .catch(err => console.error('Error loading menu:', err));
+      });
 
     function updateTotal() {
       const selected = document.querySelectorAll('.item input[type="checkbox"]:checked');
       let total = 0;
-      let cartList = document.getElementById('cartPreview');
+      const cartList = document.getElementById('cartPreview');
       cartList.innerHTML = '';
 
       selected.forEach(cb => {
-        let card = cb.closest('.item');
-        let qty = parseInt(card.querySelector('.quantity input').value) || 1;
-        let itemName = cb.value;
-        let item = menuData.find(i => i.name === itemName);
-        let priceNumber = parseFloat(item.price.replace(/[^0-9.]/g, "")) || 0;
-        let subtotal = priceNumber * qty;
-        total += subtotal;
+        const card = cb.closest('.item');
+        const qty = parseInt(card.querySelector('.quantity input').value) || 1;
+        const item = menuData.find(i => i.name === cb.value);
+        const priceNumber = parseFloat(item.price.replace(/[^0-9.]/g,""))||0;
+        total += priceNumber*qty;
 
-        let li = document.createElement('li');
-        li.textContent = `${itemName} x ${qty} = ₹${subtotal.toFixed(2)}`;
+        const li = document.createElement('li');
+        li.textContent = `${cb.value} x ${qty} = ₹${(priceNumber*qty).toFixed(2)}`;
         cartList.appendChild(li);
       });
 
       document.getElementById('cartHeader').childNodes[0].nodeValue = `🧾 Total: ₹${total.toFixed(2)} `;
 
-      const sendBtn = document.getElementById('sendOrder');
-      if (selected.length === 0) {
-        sendBtn.disabled = true;
-      } else {
-        sendBtn.disabled = false;
-        sendBtn.classList.remove('bounce');
-        void sendBtn.offsetWidth;
-        sendBtn.classList.add('bounce');
-      }
+      const payBtn = document.getElementById('payOrder');
+      const waBtn = document.getElementById('sendWhatsApp');
+      if (selected.length === 0) { payBtn.disabled = waBtn.disabled = true; }
+      else { payBtn.disabled = waBtn.disabled = false; payBtn.classList.add('bounce'); }
     }
 
-    document.getElementById('sendOrder').addEventListener('click', () => {
+    document.getElementById('payOrder').addEventListener('click', () => {
+      const total = parseFloat(document.getElementById('cartHeader').childNodes[0].nodeValue.replace(/[^0-9.]/g,""))||0;
+      if(total<=0) return alert("Please select items");
+
+      const merchantVPA = "8970100123@ibl"; // replace with your UPI ID
+      const merchantName = "Aslam";
+      const upiLink = `upi://pay?pa=${merchantVPA}&pn=${encodeURIComponent(merchantName)}&am=${total.toFixed(2)}&cu=INR`;
+
+      // Store order details in localStorage for WhatsApp
       const selected = document.querySelectorAll('.item input[type="checkbox"]:checked');
-      let message = "Hello, I would like to order:\n\n";
-      let total = 0;
-
+      let orderDetails = "Hello, I would like to order:\n\n";
       selected.forEach(cb => {
-        let card = cb.closest('.item');
-        let qty = parseInt(card.querySelector('.quantity input').value) || 1;
-        let itemName = cb.value;
-        let item = menuData.find(i => i.name === itemName);
-        let priceNumber = parseFloat(item.price.replace(/[^0-9.]/g, "")) || 0;
-        let subtotal = priceNumber * qty;
-        total += subtotal;
-
-        message += `🍽 ${itemName} x ${qty} = ₹${subtotal.toFixed(2)}\n`;
+        const card = cb.closest('.item');
+        const qty = parseInt(card.querySelector('.quantity input').value) || 1;
+        const item = menuData.find(i => i.name === cb.value);
+        const priceNumber = parseFloat(item.price.replace(/[^0-9.]/g,""))||0;
+        orderDetails += `🍽 ${cb.value} x ${qty} = ₹${(priceNumber*qty).toFixed(2)}\n`;
       });
+      orderDetails += `\n🧾 Total: ₹${total.toFixed(2)}`;
+      localStorage.setItem('orderDetails', orderDetails);
 
-      message += `\n🧾 Total: ₹${total.toFixed(2)}`;
+      // Redirect to UPI payment
+      window.location.href = upiLink;
+    });
+
+    document.getElementById('sendWhatsApp').addEventListener('click', () => {
+      const orderDetails = localStorage.getItem('orderDetails');
+      if(!orderDetails) return alert("No order found! Complete payment first.");
+
       const phone = "918970100123"; // Restaurant WhatsApp number
-      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-      window.open(url, "_blank");
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(orderDetails)}`;
+      window.open(url,"_blank");
+      localStorage.removeItem('orderDetails');
     });
 
     document.getElementById('cartHeader').addEventListener('click', () => {
       const cart = document.getElementById('cartPreview');
       const toggleIcon = document.getElementById('toggleCart');
-      if (cart.classList.contains('open')) {
-        cart.classList.remove('open');
-        toggleIcon.textContent = '▼';
-      } else {
-        cart.classList.add('open');
-        toggleIcon.textContent = '▲';
-      }
-      if (navigator.vibrate) navigator.vibrate(30);
+      if(cart.classList.contains('open')) { cart.classList.remove('open'); toggleIcon.textContent='▼'; }
+      else { cart.classList.add('open'); toggleIcon.textContent='▲'; }
+      if(navigator.vibrate) navigator.vibrate(30);
     });
 
-    function showToast(message, type) {
+    function showToast(message,type) {
       const toast = document.getElementById("toast");
       toast.textContent = message;
       toast.className = `show ${type}`;
-      if (navigator.vibrate) navigator.vibrate(20);
-      setTimeout(() => {
-        toast.className = toast.className.replace("show", "");
-      }, 2000);
+      if(navigator.vibrate) navigator.vibrate(20);
+      setTimeout(()=>{ toast.className=toast.className.replace("show",""); },2000);
     }
 
     const backToTop = document.getElementById("backToTop");
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 300) {
-        backToTop.style.display = "block";
-      } else {
-        backToTop.style.display = "none";
-      }
-    });
-    backToTop.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+    window.addEventListener("scroll",()=>{ backToTop.style.display = (window.scrollY>300)? "block":"none"; });
+    backToTop.addEventListener("click",()=>{ window.scrollTo({top:0,behavior:"smooth"}); });
   </script>
 </body>
 </html>
-
-
-
