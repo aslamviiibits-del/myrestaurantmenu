@@ -41,22 +41,19 @@
     "price": "₹25",
     "image": "images/samosa.jpg"
   },
- 
   {
     "name": "Veg Burger",
     "desc": "Delicious vegetable patty with fresh veggies",
     "price": "₹150",
     "image": "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25?auto=format&fit=crop&w=400&q=80"
   },
- 
   {
     "name": "Chicken Biryani",
     "desc": "Spicy chicken biryani with aromatic rice",
     "price": "₹320",
     "image": "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?auto=format&fit=crop&w=400&q=80"
   },
- 
-     {
+  {
     "name": "French Fries",
     "desc": "Crispy golden fries with ketchup",
     "price": "₹100",
@@ -73,5 +70,5 @@
     "desc": "Toasted sandwich with cheese and veggies",
     "price": "₹160",
     "image": "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=400&q=80"
-  } 
+  }
 ]
