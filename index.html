@@ -13,16 +13,16 @@
             background-size: cover;
         }
 
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: -1;
-        }
+            body::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: -1;
+            }
 
         h1 {
             color: #fff;
@@ -35,6 +35,19 @@
             padding: 10px;
         }
 
+        /* Dropdown */
+        .filter-bar {
+            margin: 20px 0;
+        }
+
+        select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        /* Default: Desktop (3 per row) */
         .menu {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -42,304 +55,227 @@
             margin-top: 30px;
         }
 
+        /* Tablet (2 per row) */
         @media screen and (max-width: 1024px) {
             .menu {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
+        /* Mobile (1 per row) */
         @media screen and (max-width: 768px) {
             .menu {
                 grid-template-columns: 1fr !important;
             }
+
             .item {
                 width: 95%;
                 margin: 0 auto;
-                padding: 12px;
             }
-            .item h3 { font-size: 20px; }
-            .item p { font-size: 15px; }
-            .price { font-size: 18px; }
         }
 
         .item {
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 12px;
             padding: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             transition: transform 0.2s ease;
         }
 
-        .item:hover { transform: scale(1.05); }
-        .item img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; }
-        .item h3 { margin: 10px 0 5px; font-size: 18px; color: #333; }
-        .item p { margin: 0; font-size: 14px; color: #555; }
-        .price { margin-top: 5px; font-weight: bold; color: #e67e22; font-size: 16px; }
-        .checkbox { transform: scale(1.5); margin: 8px; }
-        .qty-input { width: 60px; padding: 5px; font-size: 16px; margin-left: 10px; }
+            .item:hover {
+                transform: scale(1.05);
+            }
 
-        #sendOrder, #whatsappBtn {
-            margin-top: 20px;
-            padding: 15px 25px;
-            font-size: 18px;
+            .item img {
+                width: 100%;
+                height: 150px;
+                object-fit: cover;
+                border-radius: 8px;
+            }
+
+            .item h3 {
+                margin: 10px 0 5px;
+                font-size: 18px;
+                color: #333;
+            }
+
+            .item p {
+                margin: 0;
+                font-size: 14px;
+                color: #555;
+            }
+
+        .price {
+            margin-top: 5px;
+            font-weight: bold;
+            color: #e67e22;
+            font-size: 16px;
+        }
+
+        .cart {
+            margin-top: 30px;
+            background: rgba(255,255,255,0.95);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            text-align: left;
+        }
+
+            .cart h2 {
+                margin-bottom: 10px;
+            }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+
+        .total {
+            margin-top: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            background: #e67e22;
+            padding: 8px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .whatsapp-btn {
+            display: block;
+            margin: 15px auto 0;
             background: #25d366;
             color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        #sendOrder:hover, #whatsappBtn:hover { background: #128c7e; }
-
-        #cart {
-            margin-top: 30px;
-            background: rgba(0,0,0,0.7);
-            padding: 20px;
-            border-radius: 12px;
-            color: white;
-        }
-
-        .cart-items { font-size: 18px; line-height: 1.8; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .cart-item span { flex: 1; text-align: left; }
-        .qty-controls { display: flex; align-items: center; gap: 6px; }
-        .qty-btn { background: #e67e22; border: none; color: white; font-size: 16px; padding: 2px 8px; border-radius: 4px; cursor: pointer; }
-        .remove-btn { background: red; color: #fff; border: none; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-size: 14px; }
-        #totalLabel { font-size: 22px; font-weight: bold; color: white; margin-top: 15px; }
-
-        #cartBadge {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            background: #e67e22;
-            color: #fff;
-            font-weight: bold;
+            padding: 14px 20px;
             font-size: 18px;
-            padding: 8px 14px;
-            border-radius: 25px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            cursor: pointer;
-            z-index: 1100;
-            transition: transform 0.2s ease;
-        }
-
-        #cartBadge:hover { transform: scale(1.1); }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        #cartBadge.pulse { animation: pulse 0.4s ease; }
-
-        @media screen and (max-width: 768px) {
-            #cartBadge { display: none; }
-            #cartHeader {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                background: #e67e22;
-                color: #fff;
-                padding: 10px;
-                font-weight: bold;
-                z-index: 1300;
-            }
-            #cartSection {
-                display: none;
-                position: fixed;
-                bottom: 40px;
-                left: 0;
-                width: 100%;
-                background: rgba(255,255,255,0.97);
-                border-top: 2px solid #e67e22;
-                box-shadow: 0 -4px 12px rgba(0,0,0,0.2);
-                max-height: 50vh;
-                overflow-y: auto;
-                z-index: 1200;
-                padding: 10px;
-            }
-            #cartSection.active { display: block; }
-        }
-
-        #cartHeader button { background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; }
-        #clearCartBtn {
-            background: #c0392b;
-            color: #fff;
             border: none;
-            padding: 10px 18px;
-            font-size: 16px;
             border-radius: 8px;
             cursor: pointer;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            transition: background 0.3s ease;
+            width: 100%;
+            max-width: 400px;
         }
-        #clearCartBtn:hover { background: #e74c3c; }
+
+            .whatsapp-btn:hover {
+                background: #1ebc57;
+            }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🍴 Our Food Menu</h1>
 
-        <select id="categoryFilter">
-            <option value="All">All</option>
-        </select>
+        <div class="filter-bar">
+            <label for="category">Filter by Category: </label>
+            <select id="category">
+                <option value="All">All</option>
+                <option value="Starters">Starters</option>
+                <option value="Main Course">Main Course</option>
+                <option value="Desserts">Desserts</option>
+            </select>
+        </div>
 
         <div class="menu" id="menu"></div>
 
-        <div id="cartBadge">
-            🛒 <span id="cartCount">0</span> | ₹<span id="cartTotal">0</span>
-        </div>
-
-        <div id="cartHeader">
-            🛒 <span id="headerCartCount">0</span> | ₹<span id="headerCartTotal">0</span>
-            <button id="toggleCartBtn">⬇️</button>
-        </div>
-
-        <div id="cartSection">
-            <div id="cart"></div>
-            <p id="totalLabel">Total: ₹<span id="totalAmount">0</span></p>
-            <div id="cartActions">
-                <button id="clearCartBtn">🗑️ Clear Cart</button>
-            </div>
-            <button id="whatsappBtn">Send Order via WhatsApp</button>
+        <div class="cart" id="cart">
+            <h2>Your Cart</h2>
+            <div id="cartItems"></div>
+            <div class="total" id="total">Total: ₹0</div>
+            <button class="whatsapp-btn" id="sendOrder">Send Order via WhatsApp</button>
         </div>
     </div>
 
-    <script>
-        let cart = [];
-        let menuData = [];
+    <script>let allMenuItems = [];
+    let cart = [];
 
-        async function loadMenuData() {
-            try {
-                const response = await fetch('menu.json');
-                if (!response.ok) throw new Error("Could not load menu.json");
-                menuData = await response.json();
+    // Load menu from JSON
+    fetch('data/menu.json')
+      .then(response => response.json())
+      .then(data => {
+        allMenuItems = data;
+        renderMenu(allMenuItems);
+      })
+      .catch(err => console.error('Error loading menu:', err));
 
-                // Dynamically populate category filter
-                const categories = ["All", ...new Set(menuData.map(i => i.category))];
-                const categoryFilter = document.getElementById("categoryFilter");
-                categoryFilter.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join("");
+    function renderMenu(items) {
+      let menuDiv = document.getElementById('menu');
+      menuDiv.innerHTML = "";
+      items.forEach(item => {
+        let card = document.createElement('div');
+        card.className = 'item';
+        card.innerHTML = `
+          <img src="${item.image}" alt="${item.name}">
+          <h3>${item.name}</h3>
+          <p>${item.desc}</p>
+          <p class="price">₹${item.price}</p>
+          <label>
+            <input type="checkbox" onchange="toggleCart('${item.name}', ${item.price}, this)">
+            Add to Cart
+          </label>
+          <br>
+          <label>Qty: <input type="number" min="1" value="1" onchange="updateQuantity('${item.name}', this.value)" style="width:60px;"></label>
+        `;
+        document.getElementById('menu').appendChild(card);
+      });
+    }
 
-                renderMenu(); // initial render
-            } catch (error) {
-                console.error("Error loading menu data:", error);
-                alert("Failed to load menu data.");
-            }
-        }
+    function toggleCart(name, price, checkbox) {
+      if (checkbox.checked) {
+        cart.push({ name, price, qty: 1 });
+      } else {
+        cart = cart.filter(i => i.name !== name);
+      }
+      renderCart();
+    }
 
-        function renderMenu(filter = "All") {
-            const menuDiv = document.getElementById("menu");
-            menuDiv.innerHTML = "";
-            let filtered = filter === "All" ? menuData : menuData.filter(i => i.category === filter);
-            filtered.forEach((item, index) => {
-                const card = document.createElement("div");
-                card.className = "item";
-                card.innerHTML = `
-                  <img src="${item.image}" alt="${item.name}">
-                  <h3>${item.name}</h3>
-                  <p>${item.desc}</p>
-                  <p class="price">${item.price}</p>
-                  <input type="checkbox" class="checkbox" onchange="toggleItem(${index},this)">
-                  <input type="number" min="1" value="1" class="qty-input" id="qty-${index}" onchange="updateQtyFromMenu(${index},this.value)">
-                `;
-                menuDiv.appendChild(card);
-            });
-        }
+    function updateQuantity(name, qty) {
+      let item = cart.find(i => i.name === name);
+      if (item) {
+        item.qty = parseInt(qty) || 1;
+        renderCart();
+      }
+    }
 
-        function toggleItem(index, checkbox) {
-            const item = menuData[index];
-            const qty = parseInt(document.getElementById("qty-" + index).value) || 1;
-            if (checkbox.checked) { cart.push({ ...item, qty: qty, price: parseInt(item.price.replace("₹","")), menuIndex: index }); }
-            else { cart = cart.filter(c => c.menuIndex !== index); document.getElementById("qty-" + index).value = 1; }
-            renderCart();
-        }
+    function renderCart() {
+      let cartDiv = document.getElementById('cartItems');
+      cartDiv.innerHTML = "";
+      let total = 0;
+      cart.forEach(i => {
+        let div = document.createElement('div');
+        div.className = "cart-item";
+        div.innerHTML = `${i.name} x ${i.qty} = ₹${i.price * i.qty}`;
+        cartDiv.appendChild(div);
+        total += i.price * i.qty;
+      });
+      document.getElementById('total').innerText = "Total: ₹" + total;
+    }
 
-        function updateQtyFromMenu(index, value) {
-            const qty = parseInt(value) || 1;
-            const existing = cart.find(c => c.menuIndex === index);
-            if (existing) { existing.qty = qty; renderCart(); }
-        }
+    // Filter by category
+    document.getElementById('category').addEventListener('change', function() {
+      let selected = this.value;
+      if (selected === "All") {
+        renderMenu(allMenuItems);
+      } else {
+        renderMenu(allMenuItems.filter(i => i.category === selected));
+      }
+    });
 
-        function renderCart() {
-            const cartDiv = document.getElementById("cart");
-            cartDiv.innerHTML = "";
-            let total = 0;
-            cart.forEach((item, index) => {
-                total += item.price * item.qty;
-                const div = document.createElement("div");
-                div.className = "cart-item";
-                div.innerHTML = `
-                  <span>${item.name}</span>
-                  <div class="qty-controls">
-                    <button class="qty-btn" onclick="updateQty(${index},-1)">➖</button>
-                    <span>${item.qty}</span>
-                    <button class="qty-btn" onclick="updateQty(${index},1)">➕</button>
-                  </div>
-                  <span>₹${item.price * item.qty}</span>
-                  <button class="remove-btn" onclick="removeFromCart(${index})">❌</button>
-                `;
-                cartDiv.appendChild(div);
-            });
-            document.getElementById("totalAmount").innerText = total.toFixed(0);
-            updateCartBadge();
-        }
-
-        function updateQty(index, change) {
-            cart[index].qty += change;
-            if (cart[index].qty <= 0) { removeFromCart(index); }
-            else { document.getElementById("qty-" + cart[index].menuIndex).value = cart[index].qty; renderCart(); }
-        }
-
-        function removeFromCart(index) {
-            const menuIndex = cart[index].menuIndex;
-            document.getElementById("qty-" + menuIndex).value = 1;
-            const checkbox = document.querySelectorAll(".checkbox")[menuIndex];
-            if (checkbox) checkbox.checked = false;
-            cart.splice(index, 1);
-            renderCart();
-        }
-
-        function updateCartBadge() {
-            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-            document.getElementById("cartCount").innerText = totalItems;
-            document.getElementById("cartTotal").innerText = totalAmount.toFixed(0);
-            document.getElementById("headerCartCount").innerText = totalItems;
-            document.getElementById("headerCartTotal").innerText = totalAmount.toFixed(0);
-            const cartBadge = document.getElementById("cartBadge");
-            cartBadge.classList.remove("pulse");
-            void cartBadge.offsetWidth;
-            cartBadge.classList.add("pulse");
-        }
-
-        document.getElementById("clearCartBtn").addEventListener("click", () => {
-            if (confirm("Are you sure you want to clear the cart?")) {
-                cart = [];
-                document.querySelectorAll(".checkbox").forEach(chk => chk.checked = false);
-                document.querySelectorAll(".qty-input").forEach(qty => qty.value = 1);
-                renderCart();
-            }
-        });
-
-        document.getElementById("toggleCartBtn").addEventListener("click", () => {
-            const cartSection = document.getElementById("cartSection");
-            const toggleBtn = document.getElementById("toggleCartBtn");
-            cartSection.classList.toggle("active");
-            toggleBtn.textContent = cartSection.classList.contains("active") ? "⬆️" : "⬇️";
-        });
-
-        document.getElementById("categoryFilter").addEventListener("change", (e) => {
-            renderMenu(e.target.value);
-        });
-
-        // Load menu from JSON
-        loadMenuData();
-    </script>
+    // WhatsApp Order
+    document.getElementById('sendOrder').addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert("Please select items to order.");
+        return;
+      }
+      let orderText = "Hello, I'd like to order:\n";
+      cart.forEach(i => {
+        orderText += `• ${i.name} x ${i.qty} = ₹${i.price * i.qty}\n`;
+      });
+      let total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+      orderText += `\nTotal: ₹${total}`;
+      let phoneNumber = "918970100123"; // replace with restaurant WhatsApp number
+      let whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(orderText)}`;
+      window.open(whatsappURL, "_blank");
+    });</script>
 </body>
 </html>
+
