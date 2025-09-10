@@ -10,7 +10,7 @@
     "name": "Veggie Burger",
     "desc": "Loaded with fresh veggies.",
     "price": 180,
-    "image": "images/veggieburger.jpg",
+    "image": "https://media.istockphoto.com/id/2183832300/photo/veg-burger.jpg?s=1024x1024&w=is&k=20&c=KO3Q4ktZnP09-xivohSTwvUspgYOZI9tB49W97SK9fo=",
     "category": "Starters"
   },
   {
