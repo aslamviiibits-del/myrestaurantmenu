@@ -35,10 +35,10 @@
     "category": "Main Course"
   },
   {
-    "name": "French Fries",
+    "name": "Vada Pav",
     "desc": "Amazing",
     "price": 80,
-    "image": "images/frenchfries.jpg",
+    "image": "https://media.istockphoto.com/id/1329213718/photo/vada-pav.jpg?s=2048x2048&w=is&k=20&c=CUEAHcoGjy08UXXkz-TO4Ui8WVxJo7skh_IjoqiKFS4=",
     "category": "Starters"
   },
   {
@@ -66,7 +66,7 @@
     "name": "French Fries",
     "desc": "Crispy golden fries with ketchup",
     "price": 100,
-    "image": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=400&q=80",
+    "image": "images/frenchfries.jpg",
     "category": "Starters"
   },
   {
@@ -80,7 +80,7 @@
     "name": "Grilled Sandwich",
     "desc": "Toasted sandwich with cheese and veggies",
     "price": 160,
-    "image": "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=400&q=80",
+    "image": "https://media.istockphoto.com/id/1141240893/photo/toasted-chicken-chorizo-cheese-and-spinach-sandwich.jpg?s=2048x2048&w=is&k=20&c=mZc4XWGg2KSq6SB6pKY2rtDW_Pn5ZR-dgth8jxrPUDg=",
     "category": "Starters"
   }
 ]
