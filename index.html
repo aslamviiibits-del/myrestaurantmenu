@@ -69,6 +69,11 @@
         width: 95%;
         margin: 0 auto;
       }
+      .whatsapp-btn {
+        font-size: 20px;
+        padding: 16px;
+        font-weight: bold;
+      }
     }
 
     .item {
@@ -136,6 +141,28 @@
       padding: 8px;
       border-radius: 8px;
       text-align: center;
+    }
+
+    /* Bigger checkbox */
+    input[type="checkbox"] {
+      transform: scale(1.5);
+      margin-right: 8px;
+      cursor: pointer;
+    }
+
+    /* Bigger quantity input */
+    .qty-input {
+      width: 70px;
+      font-size: 16px;
+      padding: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    label {
+      font-size: 16px;
+      cursor: pointer;
     }
 
     .whatsapp-btn {
@@ -209,7 +236,9 @@
             Add to Cart
           </label>
           <br>
-          <label>Qty: <input type="number" min="1" value="1" onchange="updateQuantity('${item.name}', this.value)" style="width:60px;"></label>
+          <label>
+            Qty: <input type="number" min="1" value="1" onchange="updateQuantity('${item.name}', this.value)" class="qty-input">
+          </label>
         `;
         document.getElementById('menu').appendChild(card);
       });
